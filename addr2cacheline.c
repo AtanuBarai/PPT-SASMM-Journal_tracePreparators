@@ -81,10 +81,10 @@ int main(int argc, char *argv[])
                 //printf("%zu  ", read);
 
        	    //read = getline(&line, &len, infile); 
-            number = strtoul(line, NULL, 0); 
+            number = strtoul(line, NULL, 0);
     
             //printf("%s", line);
-            if(number != 0)
+            if(number != 0 && line[0] == '0' && line[1] == 'x')
             {
                 ++trace_len;
                 number = number >> rshift;
