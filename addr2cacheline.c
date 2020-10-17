@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     }   
     else 
     {
-	printf("Traversing the memory trace\n\n\n");
+	    printf("Traversing the memory trace\n\n\n");
         while ((read = getline(&line, &len, infile)) != -1) 
         //while (trace_len < 30) 
         {    
