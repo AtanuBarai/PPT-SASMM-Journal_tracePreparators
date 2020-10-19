@@ -15,13 +15,13 @@ int main(int argc, char *argv[])
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
-    unsigned long long trace_len = 0, minAddr, maxAddr, offset, i = 0, trace_len_per_core;
+    unsigned long long trace_len = 0, i = 0, trace_len_per_core, number;
     int num_cores, core;
     FILE *outfile;
     FILE *infile[MAX_CORES];
     int rshift = log2(CACHE_LINE_SIZE);
-    long int number;
     char str[30];
+
     if(argc != 3)
     {
         printf("%d of 2 arguments received\n", (argc-1));
@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
     {
         for(core = 0; core < num_cores; core++)
         {
-            read = getline(&line, &len, infile[core]);
-            fprintf(outfile, "%s", line);
+            if((read = getline(&line, &len, infile[core])) != -1)
+                fprintf(outfile, "%s", line);
         }
         ++i;
     } 

@@ -1,7 +1,7 @@
 // Author: Atanu Barai <atanu@nmsu.edu>
 // Purpose: Converts a memory address trace to cache line trace, also outputs shared addresses
 
-// #define _GNU_SOURCE
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
