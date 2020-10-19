@@ -20,7 +20,7 @@ FILE *infile;
 FILE *sharedfile;
 FILE *outfile[MAX_CORES];
 
-char str[20];
+char str[30];
 
 
 int main(int argc, char *argv[])
@@ -57,13 +57,13 @@ int main(int argc, char *argv[])
     while ((read = getline(&line, &len, sharedfile)) != -1)
     {
         number = strtoull(line, NULL, 0);
-	//printf("%llu ", number);
-	i = 0;
+        i = 0;
         while(i < n_shared_addr && shared_addr_arr[i] != number)
             i++;
         if(i == n_shared_addr)
         {
             shared_addr_arr[i] = number;
+            printf("%llu ", shared_addr_arr[i]);
             n_shared_addr++;
         }
     }
@@ -72,7 +72,8 @@ int main(int argc, char *argv[])
     
     for(core = 0; core < num_cores; core++)
     {
-        sprintf(str, "%dcores_trace_core%d.dat",num_cores, core);
+        snprintf(str, 26, "%dcores_trace_core%d.dat",num_cores, core);
+        printf("Trace: %s\n", str);
         outfile[core] = fopen(str,"w");
         if(outfile[core] == NULL)
         {
@@ -83,13 +84,11 @@ int main(int argc, char *argv[])
     i = 0;
     offset = maxAddr - minAddr;
     trace_len_per_core = (trace_len / num_cores) + 1;
-    printf("Splitting the trace into %d traces with length %lu\n", num_cores, trace_len_per_core);
-    while (1)
+    printf("Splitting the trace into %d traces with length %llu\n", num_cores, trace_len_per_core);
+    while ((read = getline(&line, &len, infile)) != -1)
     {
-        read = getline(&line, &len, infile);
-	if(read == -1) break;
         number = strtoull(line, NULL, 0);
-	printf("%llu ", number);
+	    // printf("%llu ", number);
         found = 0;
         for(j = 0; j < n_shared_addr; j++)
         {
@@ -99,16 +98,15 @@ int main(int argc, char *argv[])
                 break;
             }
         }
-
+        core = i / trace_len_per_core;
         if(found)
         {
-            fprintf(outfile[core], "%#lx\n", number);
+            fprintf(outfile[core], "%#llx\n", number);
         }
         else
         {
-            core = i / trace_len_per_core;
             number = number + ( offset * core );
-            fprintf(outfile[core], "%#lx\n", number);
+            fprintf(outfile[core], "%#llx\n", number);
         }
         ++i;
     }
