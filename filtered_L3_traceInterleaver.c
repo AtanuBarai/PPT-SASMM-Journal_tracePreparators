@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     FILE *outfile;
     FILE *infile[MAX_CORES];
     int rshift = log2(CACHE_LINE_SIZE);
-    char str[30];
+    char str[40];
 
     if(argc != 2)
     {
@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
     for(core = 0; core < num_cores; core++)
     {
         sprintf(str, "l3-%dcores_trace_core%d.dat",num_cores, core);
+        //printf("%s\n",str);
         infile[core] = fopen(str,"r");
         if(infile[core] == NULL)
         {
@@ -55,16 +56,20 @@ int main(int argc, char *argv[])
 
     
     printf("Interleaving Start\n");
+    i = 0; 
     while(i < num_cores)
     {
         for(core = 0; core < num_cores; core++)
         {
             if((read = getline(&line, &len, infile[core])) != -1)
-                fprintf(outfile, "%s", line);
+	    {
+		fprintf(outfile, "%s", line);
+		//printf("%s", line);
+	    }
             else
                 ++i;
         }
-    } 
+    }
     printf("Interleaving Done. Releasing Resources\n");
     if (line)
         free(line);
