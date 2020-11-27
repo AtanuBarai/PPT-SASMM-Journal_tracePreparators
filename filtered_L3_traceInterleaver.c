@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
-    unsigned long long i = 0, trace_len_per_core[MAX_CORES], number;
+    unsigned long long i = 0, trace_trav_done[MAX_CORES], number;
     int num_cores, core;
     FILE *outfile;
     FILE *infile[MAX_CORES];
@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 
     for(core = 0; core < num_cores; core++)
     {
+        trace_trav_done[core] = 0;
         sprintf(str, "l3-%dcores_trace_core%d.dat",num_cores, core);
         //printf("%s\n",str);
         infile[core] = fopen(str,"r");
@@ -62,12 +63,18 @@ int main(int argc, char *argv[])
         for(core = 0; core < num_cores; core++)
         {
             if((read = getline(&line, &len, infile[core])) != -1)
-	    {
-		fprintf(outfile, "%s", line);
-		//printf("%s", line);
-	    }
+    	    {
+        		fprintf(outfile, "%s", line);
+        		//printf("%s", line);
+    	    }
             else
-                ++i;
+            {
+                if (trace_trav_done[core] == 0)
+                {
+                    trace_trav_done[core] = 1;
+                    ++i;
+                }
+            }
         }
     }
     printf("Interleaving Done. Releasing Resources\n");
