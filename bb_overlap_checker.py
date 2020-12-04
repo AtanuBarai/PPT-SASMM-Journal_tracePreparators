@@ -1,7 +1,6 @@
 # Author: Atanu Barai <atanu@nmsu.edu>
 # Date: 13 September 2020
-# Purpose: Replaces basic block random numbers with basic block names, reports any overlap of basic
-# blocks
+# Purpose: reports any overlap of basic blocks
 # Copyright: PEARL Laboratory, ECE, NMSU. Part of the PPT open source project.
 # Python3 Version, used pandas to work with large trace files
 
