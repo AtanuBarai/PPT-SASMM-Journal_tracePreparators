@@ -9,10 +9,6 @@ import math
 import random
 import time
 
-CACHE_LINE_SIZE = 64
-
-rshift = int(math.log2(CACHE_LINE_SIZE))
-
 
 def main(bb_file, trace_file):
     '''
