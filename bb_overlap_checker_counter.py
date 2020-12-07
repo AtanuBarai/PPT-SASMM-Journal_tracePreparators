@@ -71,7 +71,7 @@ def main(bb_file, trace_file):
     with open('bb_counts.dat', 'w') as w_t_file:
         for key, item in bb_counts.items():
             w_t_file.write(key + ", " + str(item) + "\n")
-
+    shared_addresses = list(set(shared_addresses))
     with open('shared_addresses.dat', 'w') as w_t_file:
         for address in shared_addresses:
             w_t_file.write(address)
