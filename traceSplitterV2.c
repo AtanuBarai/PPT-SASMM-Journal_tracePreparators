@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
     // BB list file
     while ((read = getline(&line, &len, bbListFile)) != -1)
         n_bb++;
+    fclose(bbListFile);
 
     bb_count_arr = (bb_counts *)malloc(n_bb * sizeof(bb_counts));
 
