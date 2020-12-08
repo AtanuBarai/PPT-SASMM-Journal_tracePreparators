@@ -1,3 +1,1 @@
-Length of Processed Cache Line Trace(excluding basic block labels): 1039171851
-MinVal of CLine Address = 0x1fff40170
-MaxVal of CLine Address = 0x2f7f91580
+Length of Processed CLine Trace(excluding BB labels): 752575

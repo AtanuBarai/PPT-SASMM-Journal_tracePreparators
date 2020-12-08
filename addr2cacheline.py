@@ -1,8 +1,7 @@
 # Author: Atanu Barai <atanu@nmsu.edu>
 # Date: 13 September 2020
 # Last Edit : Dec 7 2020
-# Purpose: Replaces basic block random numbers with basic block names, reports any overlap of basic
-# blocks
+# Purpose: Converts memory trace to cache line address trace. Removes BB labels
 # Copyright: PEARL Laboratory, ECE, NMSU. Part of the PPT open source project.
 # Python3 Version, used pandas to work with large trace files
 
@@ -30,7 +29,7 @@ def main(trace_file):
                 count += 1
                 addr = int(line, 16)
                 addr = addr >> rshift
-                o_t_file.write(line)
+                o_t_file.write(hex(addr)+"\n")
     file_p.close()
     o_t_file.close()
     with open("stat.txt", 'w') as o_t_file:
