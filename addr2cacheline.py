@@ -11,7 +11,7 @@ import math
 
 CACHE_LINE_SIZE = 64
 
-rshift = int(math.log2(CACHE_LINE_SIZE))
+rshift = int(math.log(CACHE_LINE_SIZE, 2))
 
 
 def main(trace_file):
@@ -20,7 +20,7 @@ def main(trace_file):
     '''
     count = 0
     file_p = open(trace_file, 'r')
-    o_t_file = open('processed_trace.dat', 'w')
+    o_t_file = open('processed_cline_trace.dat', 'w')
     while True:
         line = file_p.readline()
         if not line:
